@@ -6,6 +6,8 @@ export interface Project {
   fields: {
     projectTitle: EntryFieldTypes.Text
     description: EntryFieldTypes.Text
+    projectThumbnail: contentful.Asset
+    link: EntryFieldTypes.Text
 }
 }
 
