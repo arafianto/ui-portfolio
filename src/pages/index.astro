@@ -4,9 +4,10 @@ import { Image } from "astro:assets";
 import Background from "../assets/Background.png";
 import placeholderProject from "../assets/placeholderProject.png";
 import circleHero from "../assets/circleHero.svg";
-import circleFooter from "../assets/circleFooter.svg";
+import Footer from "../components/Footer.astro";
 import scratch from "../assets/scratch.svg";
 import thumbs from "../assets/thumbs.svg";
+import Header from "../components/header.astro";
 
 import { contentfulClient } from "../lib/contentful";
 import type { Project } from "../lib/contentful";
@@ -51,21 +52,7 @@ try {
 
 <Layout>
   <!-- Header -->
-  <header
-    class="py-6 px-4 text-center absolute top-0 left-0 w-full flex sm:items-center justify-center bg-transparent md:justify-between"
-  >
-    <div
-      class="w-full max-w-6xl mx-auto flex justify-center items-center md:justify-between"
-    >
-      <a href="" class="text-[1rem] tracking-tight">Ahmad Rafianto</a>
-      <div class="hidden md:flex md:flex-row md:gap-14">
-        <p class="text-[1rem]">UI Designer</p>
-        <p class="text-[1rem]">Jakarta</p>
-        <p class="text-[1rem]">ID</p>
-      </div>
-    </div>
-  </header>
-
+	<Header/>
   <!-- Main -->
   <div class="px-4 md:px-0 w-full max-w-6xl mx-auto">
     <!-- Hero -->
@@ -91,7 +78,7 @@ try {
         </p>
         <a target="_blank"
 			href="https://www.instagram.com/arafianto"
-          class="px-4 md:px-7 py-2 md:py-3.5 text-sm bg-p0 text-bw0 rounded-4xl md:text-xl hover:bg-p1 hover:transition"
+          class="px-4 md:px-7 py-2 md:py-2 text-sm bg-p0 text-bw0 rounded-4xl md:text-xl hover:bg-p1 hover:transition"
           >Get in contact</a
         >
       </div>
@@ -135,13 +122,13 @@ try {
           <img
             src={project.projectThumbnailUrl}
             alt={project.projectTitle}
-            class="w-full aspect-square mb-4 rounded-lg object-cover"
+            class="w-full aspect-video mb-4 rounded-lg object-cover"
           />
         ) : (
           <Image
             src={placeholderProject}
             alt="Placeholder Project"
-            class:list={"w-full aspect-square mb-4 rounded-lg object-cover"}
+            class:list={"w-full aspect-video mb-4 rounded-lg object-cover"}
           />
         )}
 
@@ -159,13 +146,13 @@ try {
         <img
           src={project.projectThumbnailUrl}
           alt={project.projectTitle}
-          class="w-full aspect-square mb-4 rounded-lg object-cover"
+          class="w-full aspect-video mb-4 rounded-lg object-cover"
         />
       ) : (
         <Image
           src={placeholderProject}
           alt="Placeholder Project"
-          class:list={"w-full aspect-square mb-4 rounded-lg object-cover"}
+          class:list={"w-full aspect-video mb-4 rounded-lg object-cover"}
         />
       )}
 
@@ -180,61 +167,5 @@ try {
       </div>
     </div>
   </div>
-
-  <!-- Footer -->
-  <footer class="bg-p0 w-full">
-    <div
-      class="px-4 w-full max-w-6xl mx-auto py-12 md:grid md:grid-cols-2 md:py-32"
-    >
-      <div
-        class="flex flex-col text-center mb-20 md:text-left md:justify-between md:mb-0 z-9"
-      >
-        <div class="text-bw0 text-4xl mb-2 md:text-7xl">
-          Let's get in contact!
-        </div>
-        <div class="text-bw0 text-3xl font-semibold md:text-4xl relative z-9">
-          ahmdrafianto@gmail.com
-          <Image
-            src={circleFooter}
-            alt="Circle Decor"
-            class:list={"absolute w-[400px] -top-2 -z-1"}
-          />
-        </div>
-      </div>
-
-      <div
-        class="grid grid-cols-2 text-bw0 md:flex md:flex-col md:text-left md:gap-8"
-      >
-        <div
-          class="flex flex-col text-left justify-end gap-2 md:text-right opacity-75 md:order-2"
-        >
-          <a href="" class="text-[0.8rem] md:text-[1rem]">©2025</a>
-          <a href="" class="text-[0.8rem] md:text-[1rem]">Ahmad Rafianto</a>
-        </div>
-
-        <div class="flex flex-col text-right gap-2 md:order-1">
-          <a target="_blank" href="https://x.com/arafianto" class="text-[0.8rem] md:text-[1rem]"
-            >Twitter</a
-          >
-          <a
-            href="https://www.instagram.com/arafianto"
-            class="text-[0.8rem] md:text-[1rem]">Instagram</a
-          >
-          <a
-			target="_blank"
-            href="https://www.linkedin.com/in/arafianto"
-            class="text-[0.8rem] md:text-[1rem]">Linkedin</a
-          >
-          <a
-			target="_blank"
-            href="https://dribbble.com/arafianto"
-            class="text-[0.8rem] md:text-[1rem]">Dribbble</a
-          >
-          <a 
-			target="_blank"
-		  	href="" class="text-[0.8rem] md:text-[1rem]">Resume</a>
-        </div>
-      </div>
-    </div>
-  </footer>
+  <Footer/>
 </Layout>
