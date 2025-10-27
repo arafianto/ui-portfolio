@@ -12,7 +12,7 @@ import { contentfulClient } from "../lib/contentful";
 import type { Project } from "../lib/contentful";
 
 const entries = await contentfulClient.getEntries<Project>({
-  content_type: "projects",
+  content_type: "project",
 });
 
 const projects = entries.items.map((item) => {
@@ -115,8 +115,7 @@ const projects = entries.items.map((item) => {
         </div>
 		))}
 		
-
-        
+    
       </div>
     </div>
   </div>

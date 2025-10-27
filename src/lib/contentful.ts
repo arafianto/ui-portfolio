@@ -2,7 +2,7 @@ import * as contentful from "contentful";
 import type { EntryFieldTypes } from "contentful";
 
 export interface Project {
-  contentTypeId: "projects",
+  contentTypeId: "project",
   fields: {
     projectTitle: EntryFieldTypes.Text
     description: EntryFieldTypes.Text
