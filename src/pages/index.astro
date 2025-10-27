@@ -1,139 +1,180 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Image } from 'astro:assets';
-import Background from '../assets/Background.png';
-import placeholderProject from '../assets/placeholderProject.png';	
-import circleHero from '../assets/circleHero.svg';
-import circleFooter from '../assets/circleFooter.svg';
-import scratch from '../assets/scratch.svg';
-import thumbs from '../assets/thumbs.svg';
+import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import Background from "../assets/Background.png";
+import placeholderProject from "../assets/placeholderProject.png";
+import circleHero from "../assets/circleHero.svg";
+import circleFooter from "../assets/circleFooter.svg";
+import scratch from "../assets/scratch.svg";
+import thumbs from "../assets/thumbs.svg";
+
+import { contentfulClient } from "../lib/contentful";
+import type { Project } from "../lib/contentful";
+
+const entries = await contentfulClient.getEntries<Project>({
+  content_type: "projects",
+});
+
+const projects = entries.items.map((item) => {
+  const { projectTitle, description } = item.fields;
+  return {
+    projectTitle,
+    description,
+  };
+});
+
 
 ---
 
 <Layout>
-	<!-- Header -->
-	<header class="py-6 px-4 text-center absolute top-0 left-0 w-full flex sm:items-center justify-center bg-transparent md:justify-between">
-		<div class="w-full max-w-6xl mx-auto flex justify-center items-center md:justify-between">
-			<a href="" class="text-[1rem] tracking-tight">Ahmad Rafianto</a>
-			<div class="hidden md:block md:flex md:flex-row md:gap-14">
-				<p class="text-[1rem] ">UI Designer</p>
-				<p class="text-[1rem] ">Jakarta</p>
-				<p class="text-[1rem] ">ID</p>
-			</div>
-		</div>
-	</header>
+  <!-- Header -->
+  <header
+    class="py-6 px-4 text-center absolute top-0 left-0 w-full flex sm:items-center justify-center bg-transparent md:justify-between"
+  >
+    <div
+      class="w-full max-w-6xl mx-auto flex justify-center items-center md:justify-between"
+    >
+      <a href="" class="text-[1rem] tracking-tight">Ahmad Rafianto</a>
+      <div class="hidden md:flex md:flex-row md:gap-14">
+        <p class="text-[1rem]">UI Designer</p>
+        <p class="text-[1rem]">Jakarta</p>
+        <p class="text-[1rem]">ID</p>
+      </div>
+    </div>
+  </header>
 
-	<!-- Main -->
-	<div class="px-4 md:px-0 w-full max-w-6xl mx-auto">
-		<!-- Hero -->
-		<main class="gap-24 flex flex-col md:grid md:grid-cols-2 items-center justify-center md:justify-between text-center md:text-left py-32 min-h-svh">
-			<div class=" gap-6 md:gap-12 flex flex-col items-center md:items-start">
-				<h1 class="text-5xl text-p1 tracking-tight md:text-7xl md:leading-20 relative">
-					<span class="relative">UI Designer</span>
-					<Image src={circleHero} alt="Circle Decor" 
-					class:list={
-					'absolute w-[300px] left-1/2 transform -translate-x-1/2 -top-5 -z-1 md:w-[400px] md:-transform-none md:translate-x-0 md:left-0'
-				}/>
-					<br class="hidden md:block" /> 
-					based in Jakarta</h1>
-				<p class="text-[1rem] text-bw5 md:text-2xl md:leading-9">+2 years experience in designing and landing pages & websites. Passionate in creating delightful digital experiences.</p>
-				<button class="px-[1rem] md:px-7 py-[0.5rem] md:py-3.5 text-[1rem] bg-p0 text-bw0 rounded-4xl md:text-xl">Get in contact</button>
-			</div>
-			<div class="relative flex items-center justify-center text-center md:justify-end">
-				<Image src={Background} alt="Background Hero" class:list={'inset-0 h-full object-cover z-1 w-full'}/>
-				<Image src={thumbs} alt="Thumbs" class:list={'absolute w-[100px] -top-15 left-0 md:w-[150px] md:-top-14 md:-left-14'} />
-				<Image src={scratch} alt="Doodle" class:list={'absolute w-[150px] md:w-[200px] z-2 -bottom-10 -right-4'} />
-			</div>
-		</main>
+  <!-- Main -->
+  <div class="px-4 md:px-0 w-full max-w-6xl mx-auto">
+    <!-- Hero -->
+    <main
+      class="gap-24 flex flex-col md:grid md:grid-cols-2 items-center justify-center md:justify-between text-center md:text-left py-32 min-h-svh"
+    >
+      <div class="gap-6 md:gap-12 flex flex-col items-center md:items-start">
+        <h1
+          class="text-5xl text-p1 tracking-tight md:text-7xl md:leading-20 relative"
+        >
+          <span class="relative">UI Designer</span>
+          <Image
+            src={circleHero}
+            alt="Circle Decor"
+            class:list={"absolute w-[300px] left-1/2 transform -translate-x-1/2 -top-5 -z-1 md:w-[400px] md:-transform-none md:translate-x-0 md:left-0"}
+          />
+          <br class="hidden md:block" />
+          based in Jakarta
+        </h1>
+        <p class="text-[1rem] text-bw5 md:text-2xl md:leading-9">
+          +2 years experience in designing and landing pages & websites.
+          Passionate in creating delightful digital experiences.
+        </p>
+        <a target="_blank"
+			href="https://www.instagram.com/arafianto"
+          class="px-4 md:px-7 py-2 md:py-3.5 text-sm bg-p0 text-bw0 rounded-4xl md:text-xl hover:bg-p1 hover:transition"
+          >Get in contact</a
+        >
+      </div>
+      <div
+        class="relative flex items-center justify-center text-center md:justify-end"
+      >
+        <Image
+          src={Background}
+          alt="Background Hero"
+          class:list={"inset-0 h-full object-cover z-1 w-full"}
+        />
+        <Image
+          src={thumbs}
+          alt="Thumbs"
+          class:list={"absolute w-[100px] -top-15 left-0 md:w-[150px] md:-top-14 md:-left-14"}
+        />
+        <Image
+          src={scratch}
+          alt="Doodle"
+          class:list={"absolute w-[150px] md:w-[200px] z-2 -bottom-10 -right-4"}
+        />
+      </div>
+    </main>
 
-		<!-- Project -->
-		<div class="py-20">
-			<h2 class="text-3xl text-center mb-12 md:text-4xl md:mb-20">Project</h2>
-			<div class="md:grid md:grid-cols-2 md:gap-12">
-				<div class="mb-12">
-					<Image src={placeholderProject} alt="Placeholder Project" class:list={'w-full h-auto mb-4 rounded-lg object-cover'}/>
-					<div>
-						<h3 class="text-[1.25rem] font-medium mb-1">Project Placeholder</h3>
-						<p class="text-[1rem] text-bw5">Led the product design process
-							for a three-month project to improve the PDF signing experience on Contractbook</p>
-					</div>
-				</div>
+    <!-- Project -->
+	 
+    <div class="py-20">
+      <h2 class="text-3xl text-center mb-12 md:text-4xl md:mb-20">Project</h2>
+      <div class="md:grid md:grid-cols-2 md:gap-12">
 
-				<div class="mb-12">
-					<Image src={placeholderProject} alt="Placeholder Project" class:list={'w-full h-auto mb-4 rounded-lg object-cover'}/>
-					<div>
-						<h3 class="text-[1.25rem] font-medium mb-1">Project Placeholder</h3>
-						<p class="text-[1rem] text-bw5">Led the product design process
-							for a three-month project to improve the PDF signing experience on Contractbook</p>
-					</div>
-				</div>
+		{projects.map((project) => (
+			<div class="mb-12">
+          <Image
+            src={placeholderProject}
+            alt="Placeholder Project"
+            class:list={"w-full h-auto mb-4 rounded-lg object-cover"}
+          />
+          <div>
+            <h3 class="text-[1.25rem] font-medium mb-1">{project.projectTitle}</h3>
+            <p class="text-[1rem] text-bw5">
+				{project.description}
+            </p>
+          </div>
+        </div>
+		))}
+		
 
-				<div class="mb-12">
-					<Image src={placeholderProject} alt="Placeholder Project" class:list={'w-full h-auto mb-4 rounded-lg object-cover'}/>
-					<div>
-						<h3 class="text-[1.25rem] font-medium mb-1">Project Placeholder</h3>
-						<p class="text-[1rem] text-bw5">Led the product design process
-							for a three-month project to improve the PDF signing experience on Contractbook</p>
-					</div>
-				</div>
+        
+      </div>
+    </div>
+  </div>
 
-				<div class="mb-12">
-					<Image src={placeholderProject} alt="Placeholder Project" class:list={'w-full h-auto mb-4 rounded-lg object-cover'}/>
-					<div>
-						<h3 class="text-[1.25rem] font-medium mb-1">Project Placeholder</h3>
-						<p class="text-[1rem] text-bw5">Led the product design process
-							for a three-month project to improve the PDF signing experience on Contractbook</p>
-					</div>
-				</div>
+  <!-- Footer -->
+  <footer class="bg-p0 w-full">
+    <div
+      class="px-4 w-full max-w-6xl mx-auto py-12 md:grid md:grid-cols-2 md:py-32"
+    >
+      <div
+        class="flex flex-col text-center mb-20 md:text-left md:justify-between md:mb-0 z-9"
+      >
+        <div class="text-bw0 text-4xl mb-2 md:text-7xl">
+          Let's get in contact!
+        </div>
+        <div class="text-bw0 text-3xl font-semibold md:text-4xl relative z-9">
+          ahmdrafianto@gmail.com
+          <Image
+            src={circleFooter}
+            alt="Circle Decor"
+            class:list={"absolute w-[400px] -top-2 -z-1"}
+          />
+        </div>
+      </div>
 
-				<div class="mb-12">
-					<Image src={placeholderProject} alt="Placeholder Project" class:list={'w-full h-auto mb-4 rounded-lg object-cover'}/>
-					<div>
-						<h3 class="text-[1.25rem] font-medium mb-1">Project Placeholder</h3>
-						<p class="text-[1rem] text-bw5">Led the product design process
-							for a three-month project to improve the PDF signing experience on Contractbook</p>
-					</div>
-				</div>
+      <div
+        class="grid grid-cols-2 text-bw0 md:flex md:flex-col md:text-left md:gap-8"
+      >
+        <div
+          class="flex flex-col text-left justify-end gap-2 md:text-right opacity-75 md:order-2"
+        >
+          <a href="" class="text-[0.8rem] md:text-[1rem]">©2025</a>
+          <a href="" class="text-[0.8rem] md:text-[1rem]">Ahmad Rafianto</a>
+        </div>
 
-				<div class="mb-12">
-					<Image src={placeholderProject} alt="Placeholder Project" class:list={'w-full h-auto mb-4 rounded-lg object-cover'}/>
-					<div>
-						<h3 class="text-[1.25rem] font-medium mb-1">Project Placeholder</h3>
-						<p class="text-[1rem] text-bw5">Led the product design process
-							for a three-month project to improve the PDF signing experience on Contractbook</p>
-					</div>
-				</div>
-
-				
-			</div>
-		</div>
-	</div>
-
-	<!-- Footer -->
-	 <footer class="bg-p0 w-full">
-		<div class="px-4 w-full max-w-6xl mx-auto py-12 md:grid md:grid-cols-2 md:py-32">
-				<div class="flex flex-col text-center mb-20 md:text-left md:justify-between md:mb-0 z-9">
-					<div class="text-bw0 text-4xl mb-2 md:text-7xl">Let's get in contact!</div>
-					<div class="text-bw0 text-3xl font-semibold md:text-4xl relative z-9">ahmdrafianto@gmail.com
-						<Image src={circleFooter} alt="Circle Decor" class:list={'absolute w-[400px] -top-2 -z-1'}/>
-					</div>
-				</div>
-
-				<div class="grid grid-cols-2 text-bw0 md:flex md:flex-col md:text-left md:gap-8">
-
-					<div class="flex flex-col text-left justify-end gap-2 md:text-right opacity-75 md:order-2">
-						<a href="" class="text-[0.8rem] md:text-[1rem]">©2025</a>
-						<a href="" class="text-[0.8rem] md:text-[1rem]">Ahmad Rafianto</a>
-					</div>
-					
-					<div class="flex flex-col text-right gap-2 md:order-1">
-						<a href="" class="text-[0.8rem] md:text-[1rem]">Twitter</a>
-						<a href="" class="text-[0.8rem] md:text-[1rem]">Instagram</a>
-						<a href="" class="text-[0.8rem] md:text-[1rem]">Linkedin</a>
-						<a href="" class="text-[0.8rem] md:text-[1rem]">Dribbble</a>
-						<a href="" class="text-[0.8rem] md:text-[1rem]">Resume</a>
-					</div>	
-				</div>
-			</div>
-	 </footer>
+        <div class="flex flex-col text-right gap-2 md:order-1">
+          <a target="_blank" href="https://x.com/arafianto" class="text-[0.8rem] md:text-[1rem]"
+            >Twitter</a
+          >
+          <a
+            href="https://www.instagram.com/arafianto"
+            class="text-[0.8rem] md:text-[1rem]">Instagram</a
+          >
+          <a
+			target="_blank"
+            href="https://www.linkedin.com/in/arafianto"
+            class="text-[0.8rem] md:text-[1rem]">Linkedin</a
+          >
+          <a
+			target="_blank"
+            href="https://dribbble.com/arafianto"
+            class="text-[0.8rem] md:text-[1rem]">Dribbble</a
+          >
+          <a 
+			target="_blank"
+		  	href="" class="text-[0.8rem] md:text-[1rem]">Resume</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 </Layout>
