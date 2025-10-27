@@ -118,41 +118,65 @@ try {
 
     <!-- Project -->
 	 
-    <div class="py-20">
+    <div class="pb-20">
       <h2 class="text-3xl text-center mb-12 md:text-4xl md:mb-20">Project</h2>
       <div class="md:grid md:grid-cols-2 md:gap-12">
 
     {projects.map((project) => (
-      <div class="mb-12">
+  project.link ? (
+    <a
+      href={project.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="block group"
+    >
+      <div class="mb-6">
         {project.projectThumbnailUrl ? (
           <img
             src={project.projectThumbnailUrl}
             alt={project.projectTitle}
-            class="w-full h-auto mb-4 rounded-lg object-cover"
+            class="w-full aspect-square mb-4 rounded-lg object-cover"
           />
         ) : (
           <Image
             src={placeholderProject}
             alt="Placeholder Project"
-            class:list={"w-full h-auto mb-4 rounded-lg object-cover"}
+            class:list={"w-full aspect-square mb-4 rounded-lg object-cover"}
           />
         )}
+
         <div>
           <h3 class="text-[1.25rem] font-medium mb-1">
-            {project.link ? (
-              <a target="_blank" href={project.link}>{project.projectTitle}</a>
-            ) : (
-              project.projectTitle
-            )}
+            {project.projectTitle}
           </h3>
-          <p class="text-[1rem] text-bw5">
-            {project.description}
-          </p>
+          <p class="text-[1rem] text-bw5">{project.description}</p>
         </div>
       </div>
-    ))}
-		
-    
+    </a>
+  ) : (
+    <div class="mb-6">
+      {project.projectThumbnailUrl ? (
+        <img
+          src={project.projectThumbnailUrl}
+          alt={project.projectTitle}
+          class="w-full aspect-square mb-4 rounded-lg object-cover"
+        />
+      ) : (
+        <Image
+          src={placeholderProject}
+          alt="Placeholder Project"
+          class:list={"w-full aspect-square mb-4 rounded-lg object-cover"}
+        />
+      )}
+
+      <div>
+        <h3 class="text-[1.25rem] font-medium mb-1">{project.projectTitle}</h3>
+        <p class="text-[1rem] text-bw5">{project.description}</p>
+      </div>
+    </div>
+  )
+))}
+
       </div>
     </div>
   </div>
