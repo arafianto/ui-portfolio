@@ -11,17 +11,31 @@ import thumbs from "../assets/thumbs.svg";
 import { contentfulClient } from "../lib/contentful";
 import type { Project } from "../lib/contentful";
 
-const entries = await contentfulClient.getEntries<Project>({
-  content_type: "project",
-});
+interface ProjectData {
+  projectTitle: string;
+  description: string;
+}
 
-const projects = entries.items.map((item) => {
-  const { projectTitle, description } = item.fields;
-  return {
-    projectTitle,
-    description,
-  };
-});
+let projects: ProjectData[] = [];
+try {
+  const entries = await contentfulClient.getEntries<Project>({
+    content_type: "project",  // Changed to singular "project"
+  });
+
+  console.log("Contentful Response:", entries);  // This will help us debug
+
+  projects = entries.items.map((item) => {
+    const { projectTitle, description } = item.fields;
+    return {
+      projectTitle,
+      description,
+    };
+  });
+} catch (error) {
+  console.error("Error fetching from Contentful:", error);
+  // Provide empty projects array as fallback
+  projects = [];
+}
 
 
 ---
