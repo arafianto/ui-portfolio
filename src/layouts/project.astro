@@ -1,0 +1,57 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/header.astro";
+import { Image } from "astro:assets";
+import placeholderProject from "../assets/placeholderProject.png";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout>
+  <Header />
+
+  <div class="px-4 md:px-0 w-full max-w-6xl mx-auto pb-36 py-24 md:py-36">
+    <main
+      class="gap-24 flex flex-col items-center justify-center md:justify-between text-center md:text-left mb-24"
+    >
+      <div class="gap-6 md:gap-8 flex flex-col items-center md:items-start">
+        <h1 class="text-4xl text-bw7 text-left md:text-6xl md:w-3/4">
+          Streamline process of finding train schedule
+        </h1>
+        <p
+          class="text-[1rem] text-left text-bw5 md:text-xl md:leading-9 md:w-3/4"
+        >
+          In March 2021, I began experimenting with UI design and became
+          interested in UX principles. The placement of UI elements is based on
+          research, which sparks my curiosity and inspired me to explore UX
+          further.
+        </p>
+
+        <Image
+          src={placeholderProject}
+          alt="Placeholder Project"
+          class:list={"object-cover z-1 w-full aspect-video"}
+        />
+      </div>
+    </main>
+
+    <!-- Project Page -->
+    <div>
+      <h2 class="text-[1.75rem] text-p0 mb-4 md:mb-8">Introduction</h2>
+      <p class="text-[0.8rem] md:text-[1.25rem] mb-6 text-bw6 md:mb-12">
+        To identify potential areas for improvement, I conducted a competitive
+        analysis of 11 prominent apartment rental websites before beginning the
+        design phase. By taking screenshots and noting common features, I was
+        able to observe how competitors solve similar problems. By interacting
+        with the websites, I also evaluated potential areas for improvement and
+        feature changes.
+      </p>
+      <Image
+          src={placeholderProject}
+          alt="Placeholder Project"
+          class:list={"object-cover z-1 w-full aspect-video"}
+        />
+    </div>
+  </div>
+
+  <Footer />
+</Layout>
