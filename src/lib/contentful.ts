@@ -7,7 +7,7 @@ export interface Project {
     projectTitle: EntryFieldTypes.Text
     description: EntryFieldTypes.Text
     projectThumbnail: contentful.Asset
-    link: EntryFieldTypes.Text
+    content: EntryFieldTypes.RichText
 }
 }
 

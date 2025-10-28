@@ -8,51 +8,54 @@ import Footer from "../components/Footer.astro";
 import scratch from "../assets/scratch.svg";
 import thumbs from "../assets/thumbs.svg";
 import Header from "../components/header.astro";
-
 import { contentfulClient } from "../lib/contentful";
 import type { Project } from "../lib/contentful";
+import { slugify } from "../utils/slugify";
 
 interface ProjectData {
   projectTitle: string;
   description: string;
   link: string;
   projectThumbnailUrl?: string;
+  slug: string; // Added slug for internal routing
 }
 
 let projects: ProjectData[] = [];
+
 try {
   const entries = await contentfulClient.getEntries<Project>({
-    content_type: "project",  // Changed to singular "project"
+    content_type: "project",
   });
-
-  console.log("Contentful Response:", entries);  // This will help us debug
-
+  
+  console.log("Contentful Response:", entries);
+  
   projects = entries.items.map((item) => {
     const { projectTitle, description, link, projectThumbnail } = item.fields as any;
+    
     const projectThumbnailUrl =
       projectThumbnail && projectThumbnail.fields && projectThumbnail.fields.file && projectThumbnail.fields.file.url
         ? `https:${projectThumbnail.fields.file.url}`
         : undefined;
-
+    
     return {
       projectTitle,
       description,
       link: link ?? "",
       projectThumbnailUrl,
+      // generate a clean slug for internal routing
+      slug: slugify(projectTitle),
     };
   });
 } catch (error) {
   console.error("Error fetching from Contentful:", error);
-  // Provide empty projects array as fallback
   projects = [];
 }
-
-
 ---
 
 <Layout>
   <!-- Header -->
-	<Header/>
+  <Header/>
+  
   <!-- Main -->
   <div class="px-4 md:px-0 w-full max-w-6xl mx-auto">
     <!-- Hero -->
@@ -76,11 +79,13 @@ try {
           +2 years experience in designing and landing pages & websites.
           Passionate in creating delightful digital experiences.
         </p>
-        <a target="_blank"
-			href="https://www.instagram.com/arafianto"
+        <a 
+          target="_blank"
+          href="https://www.instagram.com/arafianto"
           class="px-4 md:px-7 py-2 md:py-2 text-sm bg-p0 text-bw0 rounded-4xl md:text-xl hover:bg-p1 hover:transition"
-          >Get in contact</a
         >
+          Get in contact
+        </a>
       </div>
       <div
         class="relative flex items-center justify-center text-center md:justify-end"
@@ -102,70 +107,42 @@ try {
         />
       </div>
     </main>
-
+    
     <!-- Project -->
-	 
     <div class="pb-20">
       <h2 class="text-3xl text-center mb-12 md:text-4xl md:mb-20">Selected Work</h2>
       <div class="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-12">
-
-    {projects.map((project) => (
-  project.link ? (
-    <a
-      href={project.link}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="block group"
-    >
-      <div class="mb-6">
-        {project.projectThumbnailUrl ? (
-          <img
-            src={project.projectThumbnailUrl}
-            alt={project.projectTitle}
-            class="w-full aspect-video mb-4 rounded-lg object-cover"
-          />
-        ) : (
-          <Image
-            src={placeholderProject}
-            alt="Placeholder Project"
-            class:list={"w-full aspect-video mb-4 rounded-lg object-cover"}
-          />
-        )}
-
-        <div>
-          <h3 class="text-[1.25rem] font-medium mb-1">
-            {project.projectTitle}
-          </h3>
-          <p class="text-[1rem] text-bw5">{project.description}</p>
-        </div>
-      </div>
-    </a>
-  ) : (
-    <div class="mb-6">
-      {project.projectThumbnailUrl ? (
-        <img
-          src={project.projectThumbnailUrl}
-          alt={project.projectTitle}
-          class="w-full aspect-video mb-4 rounded-lg object-cover"
-        />
-      ) : (
-        <Image
-          src={placeholderProject}
-          alt="Placeholder Project"
-          class:list={"w-full aspect-video mb-4 rounded-lg object-cover"}
-        />
-      )}
-
-      <div>
-        <h3 class="text-[1.25rem] font-medium mb-1">{project.projectTitle}</h3>
-        <p class="text-[1rem] text-bw5">{project.description}</p>
-      </div>
-    </div>
-  )
-))}
-
+        {projects.map((project) => (
+          <a
+            href={`/projects/${project.slug}`}
+            class="block group hover:opacity-80 transition-opacity"
+          >
+            <div class="mb-6">
+              {project.projectThumbnailUrl ? (
+                <img
+                  src={project.projectThumbnailUrl}
+                  alt={project.projectTitle}
+                  class="w-full aspect-video mb-4 rounded-lg object-cover"
+                />
+              ) : (
+                <Image
+                  src={placeholderProject}
+                  alt="Placeholder Project"
+                  class:list={"w-full aspect-video mb-4 rounded-lg object-cover"}
+                />
+              )}
+              <div>
+                <h3 class="text-[1.25rem] font-medium mb-1 group-hover:text-p0 transition-colors">
+                  {project.projectTitle}
+                </h3>
+                <p class="text-[1rem] text-bw5">{project.description}</p>
+              </div>
+            </div>
+          </a>
+        ))}
       </div>
     </div>
   </div>
+  
   <Footer/>
 </Layout>

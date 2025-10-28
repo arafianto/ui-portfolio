@@ -1,0 +1,99 @@
+---
+import { contentfulClient } from "../../lib/contentful";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+import { richTextToHtml } from "../../lib/richTextSerializer";
+import type { Project } from "../../lib/contentful";
+import Header from "../../components/header.astro";
+import Layout from "../../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import placeholderProject from "../../assets/placeholderProject.png";
+import Footer from "../../components/Footer.astro";
+import { slugify } from "../../utils/slugify";
+
+export async function getStaticPaths() {
+  const entries = await contentfulClient.getEntries<Project>({
+    content_type: "project",
+  });
+
+  const pages = entries.items.map((item) => ({
+    params: { slug: slugify(item.fields.projectTitle) },
+    props: {
+      title: item.fields.projectTitle,
+      // convert Contentful rich text to HTML with our serializer to attach classes
+      content: richTextToHtml(item.fields.content),
+      description: item.fields.description,
+      thumbnail: item.fields.projectThumbnail,
+    },
+  }));
+  return pages;
+}
+
+interface Props {
+  title: string;
+  content: string;
+  description: string;
+  thumbnail: {
+    fields: {
+      file: {
+        url: string;
+        details: {
+          image: {
+            width: number;
+            height: number;
+          };
+        };
+      };
+      description?: string;
+    };
+  };
+}
+
+const { title, content, description, thumbnail } = Astro.props;
+
+// Construct the full image URL if thumbnail exists
+const imageUrl = thumbnail?.fields?.file?.url
+  ? `https:${thumbnail.fields.file.url}`
+  : null;
+---
+<Layout title={title}>
+  <Header />
+
+  <div class="px-4 md:px-0 w-full max-w-6xl mx-auto pb-36 py-24 md:py-36">
+    <main
+      class="gap-24 flex flex-col items-center justify-center md:justify-between text-center md:text-left mb-24"
+    >
+      <div class="gap-6 md:gap-8 flex flex-col items-center md:items-start">
+        <h1 class="text-4xl text-bw7 text-left md:text-6xl md:w-3/4">
+          {title}
+        </h1>
+
+        {description && (
+          <p class="text-[1rem] text-left text-bw5 md:text-xl md:leading-9 md:w-3/4">
+            {description}
+          </p>
+        )}
+
+        {imageUrl ? (
+          <img
+            src={imageUrl}
+            alt={thumbnail?.fields?.description || title}
+            class="object-cover z-1 w-full aspect-video"
+          />
+        ) : (
+          <Image
+            src={placeholderProject}
+            alt="Placeholder Project"
+            class="object-cover z-1 w-full aspect-video"
+          />
+        )}
+      </div>
+    </main>
+
+    <!-- Project Content -->
+    <div>
+      <article class="prose prose-lg max-w-none" set:html={content} />
+    </div>
+  </div>
+
+  <Footer />
+</Layout>
