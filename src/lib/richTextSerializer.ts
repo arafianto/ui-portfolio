@@ -10,13 +10,13 @@ export function richTextToHtml(doc: any) {
     },
     renderNode: {
       [BLOCKS.HEADING_1]: (node, next) =>
-        `<h1 class="text-[1.2rem] md:text-2xl font-medium mt-6 mb-2 md:mb-4 text-p0">${next(node.content)}</h1>`,
+        `<h1 class="text-[1.2rem] md:text-2xl font-medium mt-6 md:mt-8 mb-2 md:mb-4 text-p0">${next(node.content)}</h1>`,
       [BLOCKS.HEADING_2]: (node, next) =>
         `<h2 class="text-2xl font-semibold mt-5 mb-3">${next(node.content)}</h2>`,
       [BLOCKS.PARAGRAPH]: (node, next) =>
-        `<p class="text-[0.8rem] md:text-[1rem] mb-4 text-base leading-5 md:leading-6 md:max-w-3/4 text-bw6">${next(node.content)}</p>`,
-      [BLOCKS.UL_LIST]: (node, next) => `<ul class="list-disc ml-6 mb-4">${next(node.content)}</ul>`,
-      [BLOCKS.OL_LIST]: (node, next) => `<ol class="list-decimal ml-6 mb-4">${next(node.content)}</ol>`,
+        `<p class="text-[0.8rem] md:text-[1rem] mb-4 md:mb-4 text-base leading-5 md:leading-6 text-bw6">${next(node.content)}</p>`,
+      [BLOCKS.UL_LIST]: (node, next) => `<ul class="list-disc ml-6 mb-2 md:mb-4">${next(node.content)}</ul>`,
+      [BLOCKS.OL_LIST]: (node, next) => `<ol class="list-decimal ml-6 mb-2">${next(node.content)}</ol>`,
       [BLOCKS.QUOTE]: (node, next) =>
         `<blockquote class="border-l-4 pl-4 italic text-bw5 mb-4">${next(node.content)}</blockquote>`,
       [INLINES.HYPERLINK]: (node, next) => {
@@ -29,7 +29,7 @@ export function richTextToHtml(doc: any) {
         const url = node.data?.target?.fields?.file?.url;
         const alt = node.data?.target?.fields?.description || "";
         return url
-          ? `<img src="https:${url}" alt="${alt}" class="my-6 w-full object-cover rounded-lg" />`
+          ? `<img src="https:${url}" alt="${alt}" class="my-6 md:my-12 w-full object-cover rounded-lg" />`
           : "";
       },
     },
