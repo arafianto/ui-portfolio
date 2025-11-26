@@ -26,17 +26,21 @@ try {
   const entries = await contentfulClient.getEntries<Project>({
     content_type: "project",
   });
-  
+
   console.log("Contentful Response:", entries);
-  
+
   projects = entries.items.map((item) => {
-    const { projectTitle, description, link, projectThumbnail } = item.fields as any;
-    
+    const { projectTitle, description, link, projectThumbnail } =
+      item.fields as any;
+
     const projectThumbnailUrl =
-      projectThumbnail && projectThumbnail.fields && projectThumbnail.fields.file && projectThumbnail.fields.file.url
+      projectThumbnail &&
+      projectThumbnail.fields &&
+      projectThumbnail.fields.file &&
+      projectThumbnail.fields.file.url
         ? `https:${projectThumbnail.fields.file.url}`
         : undefined;
-    
+
     return {
       projectTitle,
       description,
@@ -54,8 +58,8 @@ try {
 
 <Layout>
   <!-- Header -->
-  <Header/>
-  
+  <Header />
+
   <!-- Main -->
   <div class="px-4 md:px-0 w-full max-w-6xl mx-auto">
     <!-- Hero -->
@@ -64,7 +68,7 @@ try {
     >
       <div class="gap-6 md:gap-12 flex flex-col items-center md:items-start">
         <h1
-          class="text-5xl text-p1 tracking-tight md:text-7xl md:leading-20 relative"
+          class="hero-animate text-5xl text-p1 tracking-tight md:text-7xl md:leading-20 relative opacity-0"
         >
           <span class="relative">UI Designer</span>
           <Image
@@ -75,20 +79,22 @@ try {
           <br class="hidden md:block" />
           based in Jakarta
         </h1>
-        <p class="text-[1rem] text-bw5 md:text-2xl md:leading-9">
+        <p
+          class="hero-animate text-[1rem] text-bw5 md:text-2xl md:leading-9 opacity-0"
+        >
           +2 years experience in designing and landing pages & websites.
           Passionate in creating delightful digital experiences.
         </p>
-        <a 
+        <a
           target="_blank"
           href="https://www.instagram.com/arafianto"
-          class="px-4 md:px-7 py-2 md:py-2 text-sm bg-p0 text-bw0 rounded-4xl md:text-xl hover:bg-p1 hover:transition"
+          class="hero-animate px-4 md:px-7 py-2 md:py-2 text-sm bg-p0 text-bw0 rounded-4xl md:text-xl hover:bg-p1 hover:transition opacity-0"
         >
           Get in contact
         </a>
       </div>
       <div
-        class="relative flex items-center justify-center text-center md:justify-end"
+        class="hero-image-animate relative flex items-center justify-center text-center md:justify-end opacity-0"
       >
         <Image
           src={Background}
@@ -107,42 +113,79 @@ try {
         />
       </div>
     </main>
-    
+
     <!-- Project -->
     <div class="pb-20">
-      <h2 class="text-3xl text-center mb-12 md:text-4xl md:mb-20">Selected Work</h2>
-      <div class="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-12">
-        {projects.map((project) => (
-          <a
-            href={`/projects/${project.slug}`}
-            class="block group hover:opacity-80 transition-opacity"
-          >
-            <div class="mb-6">
-              {project.projectThumbnailUrl ? (
-                <img
-                  src={project.projectThumbnailUrl}
-                  alt={project.projectTitle}
-                  class="w-full aspect-video mb-4 rounded-lg object-cover"
-                />
-              ) : (
-                <Image
-                  src={placeholderProject}
-                  alt="Placeholder Project"
-                  class:list={"w-full aspect-video mb-4 rounded-lg object-cover"}
-                />
-              )}
-              <div>
-                <h3 class="text-[1.25rem] font-medium mb-1 group-hover:text-p0 transition-colors">
-                  {project.projectTitle}
-                </h3>
-                <p class="text-[0.8rem] md:text-[1rem] text-bw5">{project.description}</p>
+      <h2 class="text-3xl text-center mb-12 md:text-4xl md:mb-20">
+        Selected Work
+      </h2>
+      <div
+        class="project-list flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-12"
+      >
+        {
+          projects.map((project) => (
+            <a
+              href={`/projects/${project.slug}`}
+              class="project-card block group hover:opacity-80 transition-opacity opacity-0"
+            >
+              <div class="mb-6">
+                {project.projectThumbnailUrl ? (
+                  <img
+                    src={project.projectThumbnailUrl}
+                    alt={project.projectTitle}
+                    class="w-full aspect-video mb-4 rounded-lg object-cover"
+                  />
+                ) : (
+                  <Image
+                    src={placeholderProject}
+                    alt="Placeholder Project"
+                    class:list={
+                      "w-full aspect-video mb-4 rounded-lg object-cover"
+                    }
+                  />
+                )}
+                <div>
+                  <h3 class="text-[1.25rem] font-medium mb-1 group-hover:text-p0 transition-colors">
+                    {project.projectTitle}
+                  </h3>
+                  <p class="text-[0.8rem] md:text-[1rem] text-bw5">
+                    {project.description}
+                  </p>
+                </div>
               </div>
-            </div>
-          </a>
-        ))}
+            </a>
+          ))
+        }
       </div>
     </div>
   </div>
-  
-  <Footer/>
+
+  <Footer />
 </Layout>
+
+<script>
+  import { animate, stagger, inView } from "motion";
+
+  // Hero Animation
+  animate(
+    ".hero-animate",
+    { opacity: [0, 1], y: [20, 0] },
+    { duration: 0.8, delay: stagger(0.2) },
+  );
+
+  // Hero Images Animation (Simple fade in)
+  animate(
+    ".hero-image-animate",
+    { opacity: [0, 1], scale: [0.9, 1] },
+    { duration: 1, delay: 0.5 },
+  );
+
+  // Scroll Animation for Projects
+  inView(".project-list", (info) => {
+    animate(
+      ".project-card",
+      { opacity: [0, 1], y: [30, 0] },
+      { duration: 0.6, delay: stagger(0.1) },
+    );
+  });
+</script>

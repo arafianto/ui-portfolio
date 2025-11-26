@@ -14,11 +14,13 @@ import Footer from "../components/Footer.astro";
       class="gap-24 flex flex-col items-center justify-center md:justify-between text-center md:text-left mb-24"
     >
       <div class="gap-6 md:gap-8 flex flex-col items-center md:items-start">
-        <h1 class="text-4xl text-bw7 text-left md:text-6xl md:w-3/4">
+        <h1
+          class="header-animate text-4xl text-bw7 text-left md:text-6xl md:w-3/4 opacity-0"
+        >
           Streamline process of finding train schedule
         </h1>
         <p
-          class="text-[1rem] text-left text-bw5 md:text-xl md:leading-9 md:w-3/4"
+          class="header-animate text-[1rem] text-left text-bw5 md:text-xl md:leading-9 md:w-3/4 opacity-0"
         >
           In March 2021, I began experimenting with UI design and became
           interested in UX principles. The placement of UI elements is based on
@@ -29,15 +31,19 @@ import Footer from "../components/Footer.astro";
         <Image
           src={placeholderProject}
           alt="Placeholder Project"
-          class:list={"object-cover z-1 w-full aspect-video"}
+          class:list={"header-animate object-cover z-1 w-full aspect-video opacity-0"}
         />
       </div>
     </main>
 
     <!-- Project Page -->
-    <div>
-      <h2 class="text-[1.75rem] text-p0 mb-4 md:mb-8">Introduction</h2>
-      <p class="text-[0.8rem] md:text-[1.25rem] mb-6 text-bw6 md:mb-12">
+    <div class="content-section">
+      <h2 class="content-animate text-[1.75rem] text-p0 mb-4 md:mb-8 opacity-0">
+        Introduction
+      </h2>
+      <p
+        class="content-animate text-[0.8rem] md:text-[1.25rem] mb-6 text-bw6 md:mb-12 opacity-0"
+      >
         To identify potential areas for improvement, I conducted a competitive
         analysis of 11 prominent apartment rental websites before beginning the
         design phase. By taking screenshots and noting common features, I was
@@ -46,12 +52,32 @@ import Footer from "../components/Footer.astro";
         feature changes.
       </p>
       <Image
-          src={placeholderProject}
-          alt="Placeholder Project"
-          class:list={"object-cover z-1 w-full aspect-video"}
-        />
+        src={placeholderProject}
+        alt="Placeholder Project"
+        class:list={"content-animate object-cover z-1 w-full aspect-video opacity-0"}
+      />
     </div>
   </div>
 
   <Footer />
 </Layout>
+
+<script>
+  import { animate, stagger, inView } from "motion";
+
+  // Header Animation
+  animate(
+    ".header-animate",
+    { opacity: [0, 1], y: [20, 0] },
+    { duration: 0.8, delay: stagger(0.2) },
+  );
+
+  // Content Animation
+  inView(".content-section", (info) => {
+    animate(
+      info.querySelectorAll(".content-animate"),
+      { opacity: [0, 1], y: [30, 0] },
+      { duration: 0.6, delay: stagger(0.1) },
+    );
+  });
+</script>
