@@ -1,4 +1,5 @@
 ---
+import PostHogLayout from '../layouts/PostHogLayout.astro';
 import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import Background from "../assets/Background.png";
@@ -56,112 +57,114 @@ try {
 }
 ---
 
-<Layout>
-  <!-- Header -->
-  <Header />
+<PostHogLayout>
+  <Layout>
+    <!-- Header -->
+    <Header />
 
-  <!-- Main -->
-  <div class="px-4 md:px-0 w-full max-w-6xl mx-auto">
-    <!-- Hero -->
-    <main
-      class="gap-24 flex flex-col md:grid md:grid-cols-2 items-center justify-center md:justify-between text-center md:text-left py-32 min-h-svh"
-    >
-      <div class="gap-6 md:gap-12 flex flex-col items-center md:items-start">
-        <h1
-          class="hero-animate text-5xl text-p1 tracking-tight md:text-7xl md:leading-20 relative opacity-0"
+    <!-- Main -->
+    <div class="px-4 md:px-0 w-full max-w-6xl mx-auto">
+      <!-- Hero -->
+      <main
+        class="gap-24 flex flex-col md:grid md:grid-cols-2 items-center justify-center md:justify-between text-center md:text-left py-32 min-h-svh"
+      >
+        <div class="gap-6 md:gap-12 flex flex-col items-center md:items-start">
+          <h1
+            class="hero-animate text-5xl text-p1 tracking-tight md:text-7xl md:leading-20 relative opacity-0"
+          >
+            <span class="relative">UI Designer</span>
+            <Image
+              src={circleHero}
+              alt="Circle Decor"
+              class:list={"absolute w-[300px] left-1/2 transform -translate-x-1/2 -top-5 -z-1 md:w-[400px] md:-transform-none md:translate-x-0 md:left-0"}
+            />
+            <br class="hidden md:block" />
+            based in Jakarta
+          </h1>
+          <p
+            class="hero-animate text-[1rem] text-bw5 md:text-2xl md:leading-9 opacity-0"
+          >
+            +2 years experience in designing and landing pages & websites.
+            Passionate in creating delightful digital experiences.
+          </p>
+          <a
+            target="_blank"
+            href="https://www.instagram.com/arafianto"
+            class="hero-animate px-4 md:px-7 py-2 md:py-2 text-sm bg-p0 text-bw0 rounded-4xl md:text-xl hover:bg-p1 hover:transition opacity-0"
+          >
+            Get in contact
+          </a>
+        </div>
+        <div
+          class="hero-image-animate relative flex items-center justify-center text-center md:justify-end opacity-0"
         >
-          <span class="relative">UI Designer</span>
           <Image
-            src={circleHero}
-            alt="Circle Decor"
-            class:list={"absolute w-[300px] left-1/2 transform -translate-x-1/2 -top-5 -z-1 md:w-[400px] md:-transform-none md:translate-x-0 md:left-0"}
+            src={Background}
+            alt="Background Hero"
+            class:list={"inset-0 h-full object-cover z-1 w-full"}
           />
-          <br class="hidden md:block" />
-          based in Jakarta
-        </h1>
-        <p
-          class="hero-animate text-[1rem] text-bw5 md:text-2xl md:leading-9 opacity-0"
-        >
-          +2 years experience in designing and landing pages & websites.
-          Passionate in creating delightful digital experiences.
-        </p>
-        <a
-          target="_blank"
-          href="https://www.instagram.com/arafianto"
-          class="hero-animate px-4 md:px-7 py-2 md:py-2 text-sm bg-p0 text-bw0 rounded-4xl md:text-xl hover:bg-p1 hover:transition opacity-0"
-        >
-          Get in contact
-        </a>
-      </div>
-      <div
-        class="hero-image-animate relative flex items-center justify-center text-center md:justify-end opacity-0"
-      >
-        <Image
-          src={Background}
-          alt="Background Hero"
-          class:list={"inset-0 h-full object-cover z-1 w-full"}
-        />
-        <Image
-          src={thumbs}
-          alt="Thumbs"
-          class:list={"absolute w-[100px] -top-15 left-0 md:w-[150px] md:-top-14 md:-left-14"}
-        />
-        <Image
-          src={scratch}
-          alt="Doodle"
-          class:list={"absolute w-[150px] md:w-[200px] z-2 -bottom-10 -right-4"}
-        />
-      </div>
-    </main>
+          <Image
+            src={thumbs}
+            alt="Thumbs"
+            class:list={"absolute w-[100px] -top-15 left-0 md:w-[150px] md:-top-14 md:-left-14"}
+          />
+          <Image
+            src={scratch}
+            alt="Doodle"
+            class:list={"absolute w-[150px] md:w-[200px] z-2 -bottom-10 -right-4"}
+          />
+        </div>
+      </main>
 
-    <!-- Project -->
-    <div class="pb-20">
-      <h2 class="text-3xl text-center mb-12 md:text-4xl md:mb-20">
-        Selected Work
-      </h2>
-      <div
-        class="project-list flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-12"
-      >
-        {
-          projects.map((project) => (
-            <a
-              href={`/projects/${project.slug}`}
-              class="project-card block group hover:opacity-80 transition-opacity opacity-0"
-            >
-              <div class="mb-6">
-                {project.projectThumbnailUrl ? (
-                  <img
-                    src={project.projectThumbnailUrl}
-                    alt={project.projectTitle}
-                    class="w-full aspect-video mb-4 rounded-lg object-cover"
-                  />
-                ) : (
-                  <Image
-                    src={placeholderProject}
-                    alt="Placeholder Project"
-                    class:list={
-                      "w-full aspect-video mb-4 rounded-lg object-cover"
-                    }
-                  />
-                )}
-                <div>
-                  <h3 class="text-[1.25rem] font-medium mb-1 group-hover:text-p0 transition-colors">
-                    {project.projectTitle}
-                  </h3>
-                  <p class="text-[0.8rem] md:text-[1rem] text-bw5">
-                    {project.description}
-                  </p>
+      <!-- Project -->
+      <div class="pb-20">
+        <h2 class="text-3xl text-center mb-12 md:text-4xl md:mb-20">
+          Selected Work
+        </h2>
+        <div
+          class="project-list flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-12"
+        >
+          {
+            projects.map((project) => (
+              <a
+                href={`/projects/${project.slug}`}
+                class="project-card block group hover:opacity-80 transition-opacity opacity-0"
+              >
+                <div class="mb-6">
+                  {project.projectThumbnailUrl ? (
+                    <img
+                      src={project.projectThumbnailUrl}
+                      alt={project.projectTitle}
+                      class="w-full aspect-video mb-4 rounded-lg object-cover"
+                    />
+                  ) : (
+                    <Image
+                      src={placeholderProject}
+                      alt="Placeholder Project"
+                      class:list={
+                        "w-full aspect-video mb-4 rounded-lg object-cover"
+                      }
+                    />
+                  )}
+                  <div>
+                    <h3 class="text-[1.25rem] font-medium mb-1 group-hover:text-p0 transition-colors">
+                      {project.projectTitle}
+                    </h3>
+                    <p class="text-[0.8rem] md:text-[1rem] text-bw5">
+                      {project.description}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </a>
-          ))
-        }
+              </a>
+            ))
+          }
+        </div>
       </div>
     </div>
-  </div>
 
-  <Footer />
-</Layout>
+    <Footer />
+  </Layout>
+</PostHogLayout>
 
 <script>
   import { animate, stagger, inView } from "motion";
