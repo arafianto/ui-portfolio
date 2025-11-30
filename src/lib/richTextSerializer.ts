@@ -12,7 +12,7 @@ export function richTextToHtml(doc: any) {
       [BLOCKS.HEADING_1]: (node, next) =>
         `<h1 class="text-[1.2rem] md:text-2xl font-medium mt-6 md:mt-8 mb-2 md:mb-4 text-p0">${next(node.content)}</h1>`,
       [BLOCKS.HEADING_2]: (node, next) =>
-        `<h2 class="text-2xl font-semibold mt-5 mb-3">${next(node.content)}</h2>`,
+        `<h2 class="text-2xl md:text-xl font-semibold mt-5 mb-3">${next(node.content)}</h2>`,
       [BLOCKS.PARAGRAPH]: (node, next) =>
         `<p class="text-[0.8rem] md:text-[1rem] mb-4 md:mb-4 text-base leading-5 md:leading-6 text-bw6">${next(node.content)}</p>`,
       [BLOCKS.UL_LIST]: (node, next) => `<ul class="list-disc ml-6 mb-2 md:mb-4">${next(node.content)}</ul>`,
