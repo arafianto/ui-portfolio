@@ -8,6 +8,7 @@ export interface Project {
     description: EntryFieldTypes.Text
     projectThumbnail: contentful.Asset
     content: EntryFieldTypes.RichText
+    link: EntryFieldTypes.Text
 }
 }
 
